@@ -1,0 +1,50 @@
+name: enterprise-architecture-hub
+services:
+  catalog:
+    build: ./csharp
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Catalog: Data Source=/data/catalog.db
+      DecisionEngineUrl: http://decisions:8092
+      EditorToken: ${EDITOR_TOKEN:?Set EDITOR_TOKEN in .env}
+      SeedDemo: "true"
+    volumes:
+      - catalog-data:/data
+    depends_on:
+      decisions:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+  decisions:
+    build: ./java
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8092/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+  web:
+    build: ./web
+    ports: ["127.0.0.1:${WEB_PORT:-18095}:8080"]
+    depends_on:
+      catalog:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp", "/var/cache/nginx", "/var/run"]
+    security_opt: ["no-new-privileges:true"]
+volumes:
+  catalog-data:

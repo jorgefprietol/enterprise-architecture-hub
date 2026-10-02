@@ -1,0 +1,16 @@
+**/bin/
+**/obj/
+**/target/
+**/TestResults/
+web/*.tsbuildinfo
+**/node_modules/
+web/dist/
+web/playwright-report/
+web/test-results/
+.env
+*.db
+*.db-shm
+*.db-wal
+artifacts/
+*.log
+.DS_Store
