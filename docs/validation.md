@@ -25,3 +25,9 @@ Las capturas de la interfaz demuestran el aspecto del producto. No son evidencia
 GitHub Actions reproduce las pruebas sobre un entorno Linux y contenedores; su estado público confirma cada entrega automatizada.
 
 La [ejecución verificada del commit 79dc83f](https://github.com/jorgefprietol/enterprise-architecture-hub/actions/runs/37054697354) completó correctamente los siete trabajos, incluida la publicación de las tres imágenes en GHCR con SBOM y procedencia. Las imágenes llevan la etiqueta del commit `sha-79dc83f83ef83ad6c47e3495e6b830f992998f3d`.
+
+## Comprobación adicional de Docker en el equipo local
+
+Los tres servicios alcanzaron el estado saludable y el catálogo aplicó su migración inicial. La comprobación HTTP adicional recibió un `503` al solicitar el ranking porque Java excedió el tiempo de espera del catálogo; el equipo compartido tenía menos de 500 MB de memoria libre. Por tanto, esa ejecución local de integración Docker no se considera aprobada. La integración local con los procesos nativos y la integración Docker de GitHub Actions sí completaron sus verificaciones.
+
+La configuración local, excluida de Git, limita los recursos y asigna una subred explícita porque el daemon compartido agotó su reserva automática. Los servicios se detienen después de la revisión para liberar recursos; el volumen de datos se conserva. Con recursos disponibles, se reanudan desde el directorio del proyecto mediante `docker compose up -d --no-build --wait --wait-timeout 300`.
