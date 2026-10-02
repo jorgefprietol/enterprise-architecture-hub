@@ -42,7 +42,7 @@ test("authorized edits persist and can be removed through the UI", async ({
     .getByRole("button", { name: "Configurar clave de edición" })
     .click();
   await page
-    .getByLabel("Clave de edición", { exact: true })
+    .getByRole("dialog", { name: "Clave de edición", exact: true }).locator('input[type="password"]')
     .fill(process.env.EDITOR_TOKEN!);
   await page
     .getByRole("button", { name: "Guardar clave en esta sesión" })
@@ -64,7 +64,7 @@ test("authorized edits persist and can be removed through the UI", async ({
     .getByRole("button", { name: "Configurar clave de edición" })
     .click();
   await page
-    .getByLabel("Clave de edición", { exact: true })
+    .getByRole("dialog", { name: "Clave de edición", exact: true }).locator('input[type="password"]')
     .fill(process.env.EDITOR_TOKEN!);
   await page
     .getByRole("button", { name: "Guardar clave en esta sesión" })

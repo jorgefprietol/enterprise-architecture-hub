@@ -6,6 +6,8 @@ Plataforma de arquitectura empresarial que conecta objetivos estratégicos con c
 
 El caso ficticio **Meridian Commerce** representa una operación de comercio omnicanal. Sus metas, costos, evidencias y equipos son datos de demostración; no se presentan como resultados obtenidos en una empresa real.
 
+![Panel ejecutivo de Enterprise Architecture Hub](docs/images/dashboard.png)
+
 ## Producto
 
 | Función               | Resultado                                                                                                  |

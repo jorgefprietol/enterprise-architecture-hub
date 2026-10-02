@@ -571,12 +571,6 @@ export default function App() {
             <br />
             en decisiones verificables.
           </p>
-          <button onClick={() => setShowKey(true)}>
-            <ShieldCheck size={16} />
-            {token
-              ? "Clave de edición configurada"
-              : "Configurar clave de edición"}
-          </button>
         </div>
       </aside>
       <main className="main">
@@ -586,6 +580,10 @@ export default function App() {
             {sections.find((s) => s.id === section)?.name}
           </span>
           <div>
+            <button className="edit-access" aria-label="Configurar clave de edición" title="Configurar clave de edición" onClick={() => setShowKey(true)}>
+              <ShieldCheck size={16} />
+              <span>{token ? "Edición habilitada" : "Clave de edición"}</span>
+            </button>
             <span className="demo-tag">DATOS FICTICIOS</span>
             <span className="avatar">EA</span>
           </div>

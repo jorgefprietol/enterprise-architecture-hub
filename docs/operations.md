@@ -15,6 +15,8 @@ En otra terminal, `cd web`, `npm ci`, `npm run dev`. Vite reenvía `/api` a 8091
 
 ## Contenedores
 
+El esquema se crea mediante la migración `InitialCatalog`, guardada en el repositorio. Para cambios futuros, ejecutar `dotnet tool restore`, agregar una migración con `dotnet ef migrations add <Nombre> --project csharp/Architecture.Api`, y verificar actualización y restauración antes de entregar. La instancia única aplica las migraciones al iniciar. No usar `EnsureCreated` sobre este almacenamiento.
+
 `docker compose ps` muestra estado y salud. `docker compose logs --tail=100 catalog decisions web` aporta diagnóstico. Reiniciar el catálogo conserva el volumen y no vuelve a sembrar datos. La salud de Java usa Actuator; la del catálogo verifica acceso al almacenamiento. La salud del catálogo no implica disponibilidad del motor remoto; `/api/priorities` verifica el camino completo.
 
 La variable `SeedDemo=false` permite iniciar una base vacía cambiando el valor en Compose; no borra registros existentes. El catálogo admite un máximo de texto de 2000 caracteres en campos obligatorios. Mantener el token fuera del historial de comandos y del control de versiones.

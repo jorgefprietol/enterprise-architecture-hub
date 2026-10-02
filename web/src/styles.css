@@ -71,6 +71,7 @@ h3 {
   min-height: 100vh;
 }
 .sidebar {
+  overflow-y: auto;
   width: 255px;
   flex-shrink: 0;
   background: #fff;
@@ -256,6 +257,8 @@ h3 {
   font-weight: 700;
   color: #42684f;
 }
+.edit-access { display:flex; align-items:center; gap:6px; font-size:10px; color:#61776a; white-space:nowrap; padding:4px; }
+@media(max-width:760px){ .edit-access span {display:none;} .topbar>div {gap:7px;} }
 .content {
   padding: 34px 36px;
   max-width: 1600px;

@@ -10,3 +10,16 @@ Las validaciones forman parte del pipeline público; sus resultados se consultan
 - Persistencia: un objetivo nuevo, distinto de los datos semilla, se recupera después de reiniciar el proceso del catálogo y se elimina al cerrar la verificación.
 
 Las capturas de la interfaz demuestran el aspecto del producto. No son evidencia de resultados comerciales ni de un despliegue empresarial.
+
+## Verificación local del 2 de octubre de 2026
+
+| Grupo | Resultado |
+|---|---|
+| Catálogo C# | 7 pruebas correctas |
+| Motor Java | 7 pruebas correctas |
+| Lógica React | 3 pruebas correctas |
+| Interfaz E2E | 3 pruebas correctas, incluida escritura y recarga |
+| Integración HTTP | Salud, ranking remoto, presupuesto, CSV, token, auditoría y versión desactualizada verificados |
+| Dependencias | Auditorías .NET y npm sin vulnerabilidades reportadas en el momento de la revisión |
+
+GitHub Actions reproduce las pruebas sobre un entorno Linux y contenedores; su estado público confirma cada entrega automatizada.
