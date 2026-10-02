@@ -10,9 +10,9 @@ El producto requiere tablas, formularios, navegación contextual y escenarios in
 
 ## 003 — Persistencia relacional de nodo único
 
-EF Core y SQLite ofrecen restricciones de integridad, índices únicos y escrituras transaccionales sin otro proceso de almacenamiento. Las entidades y el evento de auditoría se guardan en la misma transacción de `SaveChanges`. La semilla completa tiene una transacción explícita y se aplica una sola vez. `EnsureCreated` crea el esquema inicial; los cambios futuros de esquema requieren introducir migraciones versionadas. No se ejecutan alteraciones automáticas de esquemas existentes.
+EF Core y SQLite ofrecen restricciones de integridad, índices únicos y escrituras transaccionales sin otro proceso de almacenamiento. Las entidades y el evento de auditoría se guardan en la misma transacción de `SaveChanges`. La semilla completa tiene una transacción explícita y se aplica una sola vez. Las migraciones EF Core versionadas crean el esquema y se aplican al iniciar la instancia del catálogo. El historial de migraciones permite inspeccionar el estado del almacenamiento. Los cambios posteriores deben agregar una migración y verificar su compatibilidad con el volumen existente.
 
-SQLite define el límite operativo: una sola instancia del catálogo con volumen local, sin escalado horizontal de escritura. Una migración a PostgreSQL, control optimista de concurrencia y migraciones EF son pasos necesarios para un servicio multiusuario a escala. Las ediciones actuales usan la última escritura aceptada.
+SQLite define el límite operativo: una sola instancia del catálogo con volumen local, sin escalado horizontal de escritura. Una migración a PostgreSQL y una identidad por usuario son pasos necesarios para un servicio multiusuario a escala. Cada entidad tiene una versión marcada como token de concurrencia: la edición incluye la versión leída y recibe 409 si otra sesión ya modificó el registro. EF también protege contra cambios concurrentes entre lectura y escritura.
 
 ## 004 — Reglas de alcance
 

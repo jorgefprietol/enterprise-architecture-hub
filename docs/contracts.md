@@ -2,7 +2,7 @@
 
 Los identificadores aceptan letras, números y guiones, hasta 80 caracteres. Las rutas de edición exigen el mismo ID en URL y cuerpo. Las relaciones se crean por ID; las referencias inexistentes se rechazan. Los errores 400 y 409 describen la regla violada; 401 indica clave de edición ausente o inválida; 503 indica indisponibilidad del cálculo remoto.
 
-El catálogo devuelve nombres de propiedades en camelCase. Los registros individuales se crean con POST y se reemplazan con PUT; los campos obligatorios deben incluirse también en la edición. El contrato completo se genera en `/openapi/v1.json`.
+El catálogo devuelve nombres de propiedades en camelCase. Los registros individuales se crean con POST (versión inicial 1) y se reemplazan con PUT incluyendo la propiedad `version` leída. Una edición correcta incrementa la versión; una versión desactualizada recibe 409. Los campos obligatorios deben incluirse también en la edición. El contrato completo se genera en `/openapi/v1.json`.
 
 ## Motor Java (red interna)
 
@@ -11,15 +11,25 @@ El catálogo devuelve nombres de propiedades en camelCase. Los registros individ
 ```json
 {
   "budget": 100000,
-  "candidates": [{
-    "id": "orders",
-    "name": "Gestión de pedidos comerciales",
-    "people": 2, "process": 2, "data": 2, "technology": 3,
-    "target": 4,
-    "revenue": 5, "cost": 4, "risk": 4, "customer": 5,
-    "feasibility": 5, "alignment": 1,
-    "investment": 70000, "teamType": "stream-aligned"
-  }]
+  "candidates": [
+    {
+      "id": "orders",
+      "name": "Gestión de pedidos comerciales",
+      "people": 2,
+      "process": 2,
+      "data": 2,
+      "technology": 3,
+      "target": 4,
+      "revenue": 5,
+      "cost": 4,
+      "risk": 4,
+      "customer": 5,
+      "feasibility": 5,
+      "alignment": 1,
+      "investment": 70000,
+      "teamType": "stream-aligned"
+    }
+  ]
 }
 ```
 

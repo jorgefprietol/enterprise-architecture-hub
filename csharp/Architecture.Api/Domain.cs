@@ -2,6 +2,7 @@ namespace Architecture.Api;
 
 public class Goal
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public string Metric { get; set; } = "";
@@ -10,6 +11,7 @@ public class Goal
 }
 public class CapabilityNode
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public int Level { get; set; }
@@ -21,6 +23,7 @@ public class CapabilityNode
 }
 public class Alignment
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string CapabilityId { get; set; } = "";
     public string GoalId { get; set; } = "";
@@ -28,6 +31,7 @@ public class Alignment
 }
 public class Assessment
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string CapabilityId { get; set; } = "";
     public int People { get; set; }
@@ -46,6 +50,7 @@ public class Assessment
 }
 public class ArchitectureAsset
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public string Kind { get; set; } = "";
@@ -55,6 +60,7 @@ public class ArchitectureAsset
 }
 public class TraceLink
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string CapabilityId { get; set; } = "";
     public string AssetId { get; set; } = "";
@@ -62,6 +68,7 @@ public class TraceLink
 }
 public class Initiative
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public string CapabilityId { get; set; } = "";
@@ -74,6 +81,7 @@ public class Initiative
 }
 public class Decision
 {
+    public int Version { get; set; } = 1;
     public string Id { get; set; } = "";
     public string CapabilityId { get; set; } = "";
     public string Title { get; set; } = "";

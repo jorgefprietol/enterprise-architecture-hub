@@ -37,10 +37,13 @@ if TOKEN:
     ident = 'smoke-' + uuid.uuid4().hex
     goal = {'id': ident, 'name': 'Smoke validation', 'metric': 'Validated (%)', 'owner': 'CI', 'target': 100}
     try:
-        call('/api/goals', 'POST', goal, 201)
+        created = call('/api/goals', 'POST', goal, 201)
         assert any(g['id'] == ident for g in call('/api/workspace')['goals'])
         goal['target'] = 95
-        call('/api/goals/' + ident, 'PUT', goal)
+        goal['version'] = created['version']
+        updated = call('/api/goals/' + ident, 'PUT', goal)
+        assert updated['version'] == created['version'] + 1
+        call('/api/goals/' + ident, 'PUT', goal, expected=409)
         call('/api/nodes/customer', 'DELETE', expected=409)
         assert any(a['entityId'] == ident for a in call('/api/workspace')['audit'])
     finally:

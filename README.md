@@ -8,16 +8,16 @@ El caso ficticio **Meridian Commerce** representa una operación de comercio omn
 
 ## Producto
 
-| Función | Resultado |
-|---|---|
-| Estrategia | Objetivos, indicadores, metas, responsables y relación ponderada con capacidades |
+| Función               | Resultado                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Estrategia            | Objetivos, indicadores, metas, responsables y relación ponderada con capacidades                           |
 | Modelo de capacidades | Estrategia → dominio → subdominio → capacidad → subcapacidad; búsqueda por alcance y navegación contextual |
-| Evaluación | Madurez L1–L5 de personas, procesos, datos y tecnología; evidencia y evaluador obligatorios |
-| Priorización | Matriz impacto × oportunidad, ranking explicable y simulación presupuestaria |
-| Trazabilidad | Objetivo ↔ capacidad ↔ procesos, datos, aplicaciones y tecnología; estados actual, objetivo y retiro |
-| Equipos | Responsables y tipos de equipo: alineado al flujo, plataforma, habilitador y subsistema especializado |
-| Hoja de ruta | Trimestres, inversión, resultados esperados, estados y dependencias sin ciclos |
-| Gobernanza | Decisiones con contexto y compromisos, controles de calidad, auditoría y exportación CSV de 12 columnas |
+| Evaluación            | Madurez L1–L5 de personas, procesos, datos y tecnología; evidencia y evaluador obligatorios                |
+| Priorización          | Matriz impacto × oportunidad, ranking explicable y simulación presupuestaria                               |
+| Trazabilidad          | Objetivo ↔ capacidad ↔ procesos, datos, aplicaciones y tecnología; estados actual, objetivo y retiro     |
+| Equipos               | Responsables y tipos de equipo: alineado al flujo, plataforma, habilitador y subsistema especializado      |
+| Hoja de ruta          | Trimestres, inversión, resultados esperados, estados y dependencias sin ciclos                             |
+| Gobernanza            | Decisiones con contexto y compromisos, controles de calidad, auditoría y exportación CSV de 12 columnas    |
 
 Todos los catálogos admiten altas, edición y eliminación. Las referencias protegen los registros relacionados y los cambios actualizan las vistas derivadas. [Práctica de arquitectura, revisión del mapa y gobierno](docs/practice.md).
 
@@ -86,16 +86,16 @@ GitHub Actions ejecuta pruebas de ambos servicios, compilación y pruebas de Rea
 
 ## API
 
-| Método | Ruta | Uso |
-|---|---|---|
-| GET | `/health` | Estado de almacenamiento |
-| GET | `/api/workspace` | Catálogo, relaciones y últimos 100 eventos |
-| GET | `/api/priorities?budget=200000` | Ranking y escenario calculados por Java |
-| GET | `/api/validation` | Hallazgos de calidad del modelo |
-| GET | `/api/export/capabilities.csv` | Mapa contextual de 12 columnas, con protección de fórmulas |
-| POST | `/api/{collection}` | Crear registro |
-| PUT / DELETE | `/api/{collection}/{id}` | Editar o eliminar registro |
-| GET | `/openapi/v1.json` | Contrato generado del catálogo |
+| Método       | Ruta                            | Uso                                                        |
+| ------------ | ------------------------------- | ---------------------------------------------------------- |
+| GET          | `/health`                       | Estado de almacenamiento                                   |
+| GET          | `/api/workspace`                | Catálogo, relaciones y últimos 100 eventos                 |
+| GET          | `/api/priorities?budget=200000` | Ranking y escenario calculados por Java                    |
+| GET          | `/api/validation`               | Hallazgos de calidad del modelo                            |
+| GET          | `/api/export/capabilities.csv`  | Mapa contextual de 12 columnas, con protección de fórmulas |
+| POST         | `/api/{collection}`             | Crear registro                                             |
+| PUT / DELETE | `/api/{collection}/{id}`        | Editar o eliminar registro                                 |
+| GET          | `/openapi/v1.json`              | Contrato generado del catálogo                             |
 
 Colecciones: `goals`, `nodes`, `alignments`, `assessments`, `assets`, `traces`, `initiatives`, `decisions`. Las escrituras requieren `X-Editor-Token`. El contrato de entrada al motor Java se describe en [contratos](docs/contracts.md).
 

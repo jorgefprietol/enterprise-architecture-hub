@@ -14,6 +14,8 @@ public class CatalogDb(DbContextOptions<CatalogDb> options) : DbContext(options)
     public DbSet<AuditEntry> Audit => Set<AuditEntry>();
     protected override void OnModelCreating(ModelBuilder model)
     {
+        foreach (var entity in model.Model.GetEntityTypes().Where(x => x.ClrType != typeof(AuditEntry)))
+            model.Entity(entity.ClrType).Property<int>("Version").IsConcurrencyToken();
         model.Entity<CapabilityNode>().HasOne<CapabilityNode>().WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Restrict);
         model.Entity<Alignment>().HasOne<CapabilityNode>().WithMany().HasForeignKey(x => x.CapabilityId).OnDelete(DeleteBehavior.Restrict);
         model.Entity<Alignment>().HasOne<Goal>().WithMany().HasForeignKey(x => x.GoalId).OnDelete(DeleteBehavior.Restrict);

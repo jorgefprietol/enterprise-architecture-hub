@@ -14,21 +14,21 @@ Para revisar una lista de entrada: confirmar alcance; clasificar cada entrada; s
 
 ## Revisión del mapa
 
-| Control | Evidencia |
-|---|---|
-| Alcance aprobado | Dominio, patrocinador y exclusiones definidos |
-| Nivel explícito | Cada nodo usa N1–N5 |
-| Padre inmediato | Referencia al nivel anterior |
-| Resultado de negocio | Definición sin depender de un proveedor |
-| Nombre calificado | Dominio identificable |
-| Ausencia de duplicados | Revisión de sinónimos y control normalizado |
-| Descomposición coherente | Hijos con alcance menor que su padre |
-| Responsable | Persona o equipo accountable en el contexto real |
-| Objetivo estratégico | Relación ponderada por capacidad |
-| Recorrido | Experiencia donde aparece el resultado |
-| Madurez con evidencia | Muestra, fecha, evaluador y cuatro dimensiones |
-| Soporte tecnológico | Procesos, datos, aplicaciones y tecnologías relacionados |
-| Decisiones e iniciativas | Elección defendible y ejecución calendarizada |
+| Control                  | Evidencia                                                |
+| ------------------------ | -------------------------------------------------------- |
+| Alcance aprobado         | Dominio, patrocinador y exclusiones definidos            |
+| Nivel explícito          | Cada nodo usa N1–N5                                      |
+| Padre inmediato          | Referencia al nivel anterior                             |
+| Resultado de negocio     | Definición sin depender de un proveedor                  |
+| Nombre calificado        | Dominio identificable                                    |
+| Ausencia de duplicados   | Revisión de sinónimos y control normalizado              |
+| Descomposición coherente | Hijos con alcance menor que su padre                     |
+| Responsable              | Persona o equipo accountable en el contexto real         |
+| Objetivo estratégico     | Relación ponderada por capacidad                         |
+| Recorrido                | Experiencia donde aparece el resultado                   |
+| Madurez con evidencia    | Muestra, fecha, evaluador y cuatro dimensiones           |
+| Soporte tecnológico      | Procesos, datos, aplicaciones y tecnologías relacionados |
+| Decisiones e iniciativas | Elección defendible y ejecución calendarizada            |
 
 La plataforma impone integridad estructural y señales de calidad; esta revisión agrega juicio de negocio. El mapa no convierte un nombre válido en una capacidad útil por sí solo.
 

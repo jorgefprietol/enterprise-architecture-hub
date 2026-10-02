@@ -66,4 +66,21 @@ public class CatalogTests(CatalogFixture fixture) : IClassFixture<CatalogFixture
         Assert.Equal(HttpStatusCode.NoContent, (await client.DeleteAsync("/api/nodes/test-csv")).StatusCode);
         Assert.Contains("create:goals", await client.GetStringAsync("/api/workspace"));
     }
+    [Fact]
+    public async Task StaleEditIsRejectedWithoutOverwritingAcceptedChange()
+    {
+        using var client = Editor();
+        var goal = new Goal { Id = "test-concurrency", Name = "Retención", Metric = "Clientes recurrentes (%)", Owner = "Clientes", Target = 50 };
+        var created = await (await client.PostAsJsonAsync("/api/goals", goal)).Content.ReadFromJsonAsync<Goal>();
+        Assert.Equal(1, created!.Version);
+        goal.Target = 60;
+        var updated = await (await client.PutAsJsonAsync("/api/goals/test-concurrency", goal)).Content.ReadFromJsonAsync<Goal>();
+        Assert.Equal(2, updated!.Version);
+        goal.Target = 70;
+        Assert.Equal(HttpStatusCode.Conflict, (await client.PutAsJsonAsync("/api/goals/test-concurrency", goal)).StatusCode);
+        var workspace = System.Text.Json.JsonDocument.Parse(await client.GetStringAsync("/api/workspace"));
+        var persisted = workspace.RootElement.GetProperty("goals").EnumerateArray().Single(x => x.GetProperty("id").GetString() == goal.Id);
+        Assert.Equal(60, persisted.GetProperty("target").GetDecimal());
+        Assert.Equal(HttpStatusCode.NoContent, (await client.DeleteAsync("/api/goals/test-concurrency")).StatusCode);
+    }
 }

@@ -22,6 +22,8 @@ app.Use(async (context, next) =>
     }
     try { await next(); }
     catch (CatalogException ex) { context.Response.StatusCode = 400; await context.Response.WriteAsJsonAsync(new { title = ex.Message, status = 400 }); }
+    catch (CatalogConflictException ex) { context.Response.StatusCode = 409; await context.Response.WriteAsJsonAsync(new { title = ex.Message, status = 409 }); }
+    catch (DbUpdateConcurrencyException) { context.Response.StatusCode = 409; await context.Response.WriteAsJsonAsync(new { title = "El registro cambió durante la edición. Recarga el catálogo.", status = 409 }); }
     catch (DbUpdateException) { context.Response.StatusCode = 409; await context.Response.WriteAsJsonAsync(new { title = "Conflicto: identificador duplicado o entidad todavía referenciada.", status = 409 }); }
     catch (HttpRequestException) { context.Response.StatusCode = 503; await context.Response.WriteAsJsonAsync(new { title = "Motor de decisiones no disponible.", status = 503 }); }
     catch (TaskCanceledException) when (!context.RequestAborted.IsCancellationRequested) { context.Response.StatusCode = 503; await context.Response.WriteAsJsonAsync(new { title = "El motor de decisiones excedió el tiempo de espera.", status = 503 }); }
@@ -89,7 +91,7 @@ app.MapGet("/api/export/capabilities.csv", async (CatalogDb db) =>
 });
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<CatalogDb>(); await db.Database.EnsureCreatedAsync();
+    var db = scope.ServiceProvider.GetRequiredService<CatalogDb>(); await db.Database.MigrateAsync();
     if (builder.Configuration.GetValue("SeedDemo", true)) await Seed.Initialize(db);
 }
 app.Run();
@@ -99,6 +101,7 @@ void MapCrud<T>(string route) where T : class
     app.MapPost($"/api/{route}", async (T item, CatalogDb db) =>
     {
         await CatalogRules.Validate(db, item); var id = (string)item.GetType().GetProperty("Id")!.GetValue(item)!;
+        item.GetType().GetProperty("Version")!.SetValue(item, 1);
         db.Add(item); db.Audit.Add(new AuditEntry { At = DateTimeOffset.UtcNow, Action = $"create:{route}", EntityId = id }); await db.SaveChangesAsync();
         return Results.Created($"/api/{route}/{id}", item);
     });
@@ -106,7 +109,11 @@ void MapCrud<T>(string route) where T : class
     {
         CatalogRules.Require(id == (string?)item.GetType().GetProperty("Id")!.GetValue(item), "El identificador de la ruta no coincide.");
         var existing = await db.Set<T>().FindAsync(id); if (existing is null) return Results.NotFound();
+        var versionProperty = item.GetType().GetProperty("Version")!;
+        var currentVersion = (int)versionProperty.GetValue(existing)!;
+        if ((int)versionProperty.GetValue(item)! != currentVersion) throw new CatalogConflictException("El registro fue editado por otra sesión. Recarga el catálogo antes de guardar.");
         await CatalogRules.Validate(db, item); db.Entry(existing).CurrentValues.SetValues(item);
+        db.Entry(existing).Property("Version").CurrentValue = currentVersion + 1;
         db.Audit.Add(new AuditEntry { At = DateTimeOffset.UtcNow, Action = $"update:{route}", EntityId = id }); await db.SaveChangesAsync(); return Results.Ok(existing);
     });
     app.MapDelete($"/api/{route}/{{id}}", async (string id, CatalogDb db) =>
@@ -123,3 +130,4 @@ static string Csv(string? value)
     return "\"" + value.Replace("\"", "\"\"") + "\"";
 }
 public partial class Program;
+public class CatalogConflictException(string message) : Exception(message);
