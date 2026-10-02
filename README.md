@@ -33,7 +33,7 @@ Copy-Item .env.example .env
 docker compose up -d --build --wait
 ```
 
-Abrir [http://localhost:18095](http://localhost:18095). Para editar, usar «Configurar clave de edición» e introducir el valor local de `EDITOR_TOKEN`. La clave solo se guarda en memoria del navegador; no se incluye en el código ni en la imagen.
+Abrir [http://localhost:18145](http://localhost:18145). Para editar, usar «Configurar clave de edición» e introducir el valor local de `EDITOR_TOKEN`. La clave solo se guarda en memoria del navegador; no se incluye en el código ni en la imagen.
 
 ```bash
 cp .env.example .env
@@ -47,7 +47,7 @@ El catálogo persiste en el volumen `catalog-data`. `docker compose down` conser
 
 ```mermaid
 flowchart LR
-  User[Panel ejecutivo React] --> Edge[Nginx :18095]
+  User[Panel ejecutivo React] --> Edge[Nginx :18145]
   Edge --> Catalog[C# · catálogo y gobernanza]
   Catalog --> SQL[(SQLite · volumen persistente)]
   Catalog --> Engine[Java · motor de priorización]

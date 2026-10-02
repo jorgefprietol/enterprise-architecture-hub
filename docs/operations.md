@@ -41,4 +41,6 @@ Para un respaldo consistente, detener `catalog`, copiar el contenido de su volum
 
 El pipeline publica `ghcr.io/jorgefprietol/enterprise-architecture-hub-{catalog,decisions,web}`. Seleccionar la etiqueta `sha-<commit>` o un digest inmutable para una entrega reproducible; `latest` sigue la última construcción aprobada. La política de visibilidad del paquete en GitHub es independiente de la visibilidad del repositorio.
 
-La entrega automática termina en el registro de imágenes. No hay despliegue a un proveedor cloud ni promesa de disponibilidad pública. El servicio local se abre en `http://localhost:18095`.
+La entrega automática termina en el registro de imágenes. No hay despliegue a un proveedor cloud ni promesa de disponibilidad pública. El servicio local se abre en `http://localhost:18145`.
+
+El puerto predeterminado `18145` permite coexistir con los otros proyectos del equipo. Si ya existe un archivo `.env` de una revisión anterior, actualizar solo `WEB_PORT=18145` y conservar la clave de edición. Después ejecutar `docker compose up -d --no-build --wait --wait-timeout 300`; Compose aplica el nuevo puerto y conserva el volumen de datos.

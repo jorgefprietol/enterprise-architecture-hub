@@ -5,7 +5,7 @@ import urllib.request
 import urllib.error
 import uuid
 
-BASE = os.environ.get('BASE_URL', 'http://127.0.0.1:18095')
+BASE = os.environ.get('BASE_URL', 'http://127.0.0.1:18145')
 TOKEN = os.environ.get('EDITOR_TOKEN', '')
 
 def call(path, method='GET', body=None, expected=200, authenticated=True):

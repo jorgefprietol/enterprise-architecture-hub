@@ -76,7 +76,7 @@ jobs:
           key=$(openssl rand -hex 32)
           echo "::add-mask::$key"
           echo "EDITOR_TOKEN=$key" >> "$GITHUB_ENV"
-          printf 'EDITOR_TOKEN=%s\nWEB_PORT=18095\n' "$key" > .env
+          printf 'EDITOR_TOKEN=%s\nWEB_PORT=18145\n' "$key" > .env
       - run: docker compose up -d --build --wait --wait-timeout 180
       - run: python3 scripts/smoke.py
       - run: npm ci && npx playwright install --with-deps chromium && npm run test:e2e
@@ -85,7 +85,7 @@ jobs:
         run: |
           python3 scripts/persistence.py before
           docker compose restart catalog
-          for i in $(seq 1 40); do curl -fsS http://127.0.0.1:18095/health && break || sleep 2; done
+          for i in $(seq 1 40); do curl -fsS http://127.0.0.1:18145/health && break || sleep 2; done
           python3 scripts/persistence.py after
           python3 scripts/smoke.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
