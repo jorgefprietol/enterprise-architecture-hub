@@ -8,6 +8,7 @@ web/dist/
 web/playwright-report/
 web/test-results/
 .env
+compose.override.yaml
 *.db
 *.db-shm
 *.db-wal

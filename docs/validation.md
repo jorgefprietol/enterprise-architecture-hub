@@ -23,3 +23,5 @@ Las capturas de la interfaz demuestran el aspecto del producto. No son evidencia
 | Dependencias | Auditorías .NET y npm sin vulnerabilidades reportadas en el momento de la revisión |
 
 GitHub Actions reproduce las pruebas sobre un entorno Linux y contenedores; su estado público confirma cada entrega automatizada.
+
+La [ejecución verificada del commit 79dc83f](https://github.com/jorgefprietol/enterprise-architecture-hub/actions/runs/37054697354) completó correctamente los siete trabajos, incluida la publicación de las tres imágenes en GHCR con SBOM y procedencia. Las imágenes llevan la etiqueta del commit `sha-79dc83f83ef83ad6c47e3495e6b830f992998f3d`.

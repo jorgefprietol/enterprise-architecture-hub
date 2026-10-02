@@ -19,6 +19,18 @@ El esquema se crea mediante la migración `InitialCatalog`, guardada en el repos
 
 `docker compose ps` muestra estado y salud. `docker compose logs --tail=100 catalog decisions web` aporta diagnóstico. Reiniciar el catálogo conserva el volumen y no vuelve a sembrar datos. La salud de Java usa Actuator; la del catálogo verifica acceso al almacenamiento. La salud del catálogo no implica disponibilidad del motor remoto; `/api/priorities` verifica el camino completo.
 
+Si un host compartido agotó los rangos automáticos de red, crear un `compose.override.yaml` local con una subred libre después de revisar `docker network inspect`. Este archivo está ignorado por Git. Ejemplo para un rango que no esté asignado en ese host:
+
+```yaml
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.254.195.0/28
+```
+
+`docker compose stop` libera los procesos del proyecto y conserva los contenedores, la red y el volumen. `docker compose up -d --wait` restaura el servicio con los mismos datos.
+
 La variable `SeedDemo=false` permite iniciar una base vacía cambiando el valor en Compose; no borra registros existentes. El catálogo admite un máximo de texto de 2000 caracteres en campos obligatorios. Mantener el token fuera del historial de comandos y del control de versiones.
 
 ## Respaldo
